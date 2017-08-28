@@ -23,7 +23,7 @@ public class RewardNetworkTests {
 	@Test
 	public void testRewardForDining() {
 		
-		Dining dining = Dining.createDining("250.00", "1234123412341234", "1234567890");
+		Dining dining = Dining.createDining("100.00", "1234123412341234", "1234567890");
 		rewardNetwork.rewardAccountFor(dining);
 		RewardConfirmation confirmation = rewardNetwork.rewardAccountFor(dining);
 
