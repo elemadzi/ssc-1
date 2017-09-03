@@ -7,7 +7,9 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Component;
 
 import common.money.MonetaryAmount;
 import common.money.Percentage;
@@ -21,9 +23,9 @@ import common.money.Percentage;
  * Configure Dependency Injection for dataSource.  
  * Decide if you should use field level or setter injection. 
  */
-
+@Component
 public class JdbcAccountRepository implements AccountRepository {
-
+	@Autowired
 	private DataSource dataSource;
 
 	/**
