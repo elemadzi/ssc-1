@@ -38,8 +38,6 @@ public class DBExceptionHandlingAspectTests {
 			assertTrue(e instanceof RewardDataAccessException);
 		}
 
-		// TODO-12: (Optional) Validate our AOP is working.
-		//
 		// An error message should now be logged to the console as a warning
 		//
 		// Save all your work and run this test - it should pass with a warning
