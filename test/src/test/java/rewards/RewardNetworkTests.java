@@ -22,50 +22,6 @@ import common.money.MonetaryAmount;
  * application for use in a test environment.
  */
 
-/* TODO 01: Remove setUp() and tearDown() methods and use annotations instead
- *            such as @ContextConfiguration and @RunWith
- * 			- Remove the attribute 'context' which is not needed anymore.
- * 			- Use @Autowire to populate the rewardNetwork instance.
- *			- Re-run the current test, it should pass.
- */
-
-/* TODO 02: In the package rewards/internal, annotate all 'Stub*Repository' classes
- *            with the @Repository annotation (WITHOUT specifying any profile yet).
- * 			- Rerun the current test, it should fail.  Why?
- */
-
-/* TODO 03: Using the @Profile annotation, assign the 'jdbc' profile to all Jdbc*Repository classes 
- * 			  (such as JdbcAccountRepository).  (Be sure to annotate the actual repository classes in
- * 			  src/main/java, not the test classes in src/main/test!)
- * 			- In the same way, assign the 'stub' profile to all Stub*Repository classes 
- * 			  (such as StubAccountRepository)
- * 			- Add @ActiveProfiles to this test class (below) and specify the "stub" profile.
- * 			- Run the current test, it should pass. 
- * 			  Examine the logs, they should indicate "stub" repositories were used.
- */
-
-/* TODO 04: Change active-profile to "jdbc". Rerun the test, it should pass.  
- * 			Which repository implementations are being used now?
- */
-
-/* TODO 05: Go to corresponding step in TestInfrastructureDevConfig.
- */
-
-/* TODO 06: Now that the bean 'dataSource' is specific to the jdbc-dev profile, should we expect 
- * 			this test to be successful?
- * 			Make the appropriate changes so the current test uses 2 profiles ('jdbc' and 'jdbc-dev').
- * 			Rerun the test, it should pass.
- */
-
-/* TODO 07: Open TestInfrastructureProductionConfig and note the different datasource that will be
- * 			used if the profile = 'jdbc-production'.
- * 			Now update the current test so it uses profiles 'jdbc' and 'jdbc-production'. 
- * 			Rerun the test, it should pass.
- */
-
-/* TODO 08: Bonus question: see the 'Optional Step' inside the Detailed Instructions.
- */
-
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes=TestInfrastructureConfig.class)
