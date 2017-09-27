@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import rewards.RewardNetwork;
@@ -18,8 +19,10 @@ import rewards.internal.reward.RewardRepository;
 //	Note that this configuration class is not in the same base package as the
 //	interfaces annotated in the previous steps.
 
+@EnableJpaRepositories(basePackages="rewards")
 @Configuration
 @EnableTransactionManagement
+
 public class RewardsConfig {
 
 	@Autowired
