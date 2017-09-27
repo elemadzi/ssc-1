@@ -10,6 +10,9 @@ import rewards.internal.restaurant.Restaurant;
 import rewards.internal.restaurant.RestaurantRepository;
 import rewards.internal.reward.RewardRepository;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import common.money.MonetaryAmount;
 
 /**
@@ -50,7 +53,8 @@ public class RewardNetworkImpl implements RewardNetwork {
 	 */
 	
 	/* TODO-01: Add transactional annotation to identify this method as needing transactional behavior */
-	
+//	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	@Transactional
 	public RewardConfirmation rewardAccountFor(Dining dining) {
 		Account account = accountRepository.findByCreditCard(dining.getCreditCardNumber());
 		Restaurant restaurant = restaurantRepository.findByMerchantNumber(dining.getMerchantNumber());
