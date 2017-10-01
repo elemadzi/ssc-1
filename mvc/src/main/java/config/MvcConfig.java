@@ -1,10 +1,13 @@
 package config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 /**
  * TODO-02: Add an InternalResourceViewResolver bean definition.
@@ -18,6 +21,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableWebMvc
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
+	
+	@Bean
+	public ViewResolver irvr(){
+		InternalResourceViewResolver vr = new InternalResourceViewResolver();
+		vr.setPrefix("/WEB-INF/views/");
+		vr.setSuffix(".jsp");
+		return vr;
+	}
 	/**
 	 * Map URL /resources/* to serve static resources from classpath:/static/*
 	 * This allows us to store and distribute css, images, etc. in JAR file.

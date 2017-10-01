@@ -32,14 +32,18 @@ public class AccountControllerTests {
 		String viewName = controller.accountList(model);
 
 		List<Account> accounts = (List<Account>) model.get("accounts");
+		assertEquals("accountList", viewName);
 		assertNotNull(accounts);
 		assertEquals(1, accounts.size());
 		assertEquals(Long.valueOf(0), accounts.get(0).getEntityId());
-
 		// TODO-04: Change this to expect a logical view name
 		// Re-run the test and make sure it passes
 		//
-		assertEquals("/WEB-INF/views/accountList.jsp", viewName);
+		
+		
+		
+	
+		
 	}
 
 	// TODO-05: Restart the server. You should still be able to see the
@@ -50,6 +54,16 @@ public class AccountControllerTests {
 	// retrieve.
 	// Create assertions for model contents and view name.
 	// When complete run the test. It should pass.
+
+	@Test
+	public void testHandleDetailsRequest() {
+		ExtendedModelMap model = new ExtendedModelMap();
+		String viewName = controller.accountDetails(0, model);
+		Account account = (Account) model.get("account");
+		assertEquals("accountDetails", viewName);
+		assertNotNull(account);
+		assertEquals(Long.valueOf(0), account.getEntityId());
+	}
 
 
 	// TODO-08: Restart the server. You should now be able to click
