@@ -1,18 +1,24 @@
 package accounts.web;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import accounts.AccountManager;
 import common.money.Percentage;
@@ -46,7 +52,8 @@ public class AccountController {
     //   b. Return a List<Account> to be converted to the response body
 	// Save your work and restart the application.
 	// You should get JSON results in your browser when accessing http://localhost:8080/accounts
-	public List<Account> accountSummary() {
+	@GetMapping(value = "/accounts")
+	public @ResponseBody List<Account> accountSummary() {
 		return accountManager.getAllAccounts();
 	}
 
@@ -58,7 +65,8 @@ public class AccountController {
     //   b. Return  an Account to be converted to the response body
 	// Save your work and restart the application.
 	// You should get JSON results in your browser when accessing http://localhost:8080/accounts/0
-	public Account accountDetails(int id) {
+	@GetMapping(value = "/accounts/{id}")
+	public Account accountDetails(@PathVariable int id) {
 		return retrieveAccount(id);
 	}
 
@@ -70,6 +78,8 @@ public class AccountController {
 	//  a. Respond to POST /accounts requests
     //  b. Automatically get an unmarshaled Account from the request
     //  c. Indicate a "201 Created" status
+	@PostMapping(value = "/accounts")
+	@ResponseStatus(HttpStatus.CREATED) 
 	public ResponseEntity<Void> createAccount(Account newAccount) {
 		// Saving the account also sets its entity Id
 		Account account = accountManager.save(newAccount);
@@ -101,7 +111,11 @@ public class AccountController {
 		//     ResponseEntity to implement this.
 		//  c. Refer to the POST example in the slides for more information
 
-		return null; // Return something other than null
+		URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{childId}").buildAndExpand(resourceId).toUri();
+		return ResponseEntity.created(location).build();
+		
+		
+		
 	}
 
 	/**
@@ -122,7 +136,9 @@ public class AccountController {
 	//   a. Respond to a POST /accounts/{accountId}/beneficiaries
 	//   b. Extract a beneficiary name from the incoming request
 	//   c. Indicate a "201 Created" status
-	public ResponseEntity<Void> addBeneficiary(long accountId, String beneficiaryName) {
+	@PostMapping(value = "/accounts/{accountId}/beneficiaries")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<Void> addBeneficiary(@PathVariable long accountId, @RequestBody String beneficiaryName) {
 		accountManager.addBeneficiary(accountId, beneficiaryName);
 
 		// TODO 12: Create a ResponseEntity containing the location of the newly
@@ -131,7 +147,7 @@ public class AccountController {
 		//     should be.  What are we using to identify the Beneficiary?
 		//  b. Use the entityWithLocation method - like we did for createAccount().
 		
-		return null;  // TODO 12: Modify this to return something 
+		return entityWithLocation(beneficiaryName);  // TODO 12: Modify this to return something 
 	}
 
 	/**
@@ -141,7 +157,9 @@ public class AccountController {
 	// TODO 13: Complete this method by adding the appropriate annotations to:
 	//  a. Respond to a DELETE to /accounts/{accountId}/beneficiaries/{beneficiaryName}
 	//  b. Indicate a "204 No Content" status
-	public void removeBeneficiary(long accountId, String beneficiaryName) {
+	@DeleteMapping(value = "/accounts/{accountId}/beneficiaries/{beneficiaryName}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void removeBeneficiary(@PathVariable long accountId, @PathVariable String beneficiaryName) {
 		Account account = accountManager.getAccount(accountId);
 		Beneficiary b = account.getBeneficiary(beneficiaryName);
 
@@ -171,6 +189,13 @@ public class AccountController {
 	// DataIntegrityViolationExceptions to a 409 Conflict status code.
 	// Use the handleNotFound method above for guidance and/or look at
 	// the Advanced materials in the slides.
+	
+	@ResponseStatus(HttpStatus.CONFLICT)
+	@ExceptionHandler({ DataIntegrityViolationException.class })
+	public void handleAlreadyExists(Exception ex) {
+		logger.error("Exception is: ", ex);
+		// return empty 409
+	}
 	
 	/**
 	 * Finds the Account with the given id, throwing an IllegalArgumentException

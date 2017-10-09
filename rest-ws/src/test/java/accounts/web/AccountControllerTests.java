@@ -61,7 +61,7 @@ public class AccountControllerTests {
 	// other useful classes for testing Controllers like MockHttpSession
 	// and MockHttpSrvletResponse.
 	@Test
-	@Ignore
+
 	public void testCreateAccount() {
 		Account newAccount = new Account("11223344", "Test");
 
