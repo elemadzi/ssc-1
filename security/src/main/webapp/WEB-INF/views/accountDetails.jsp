@@ -65,6 +65,7 @@
 			
 			<%-- TODO-10: Only viewers should be allowed to view beneficiaries information. 
 				Hide the table row below from all users who do not have the "VIEWER" role --%>
+				<security:authorize access="hasRole('ROLE_VIEWER')">	
 			<div>
 				<h2>
 					Beneficiaries
@@ -99,7 +100,7 @@
 				</table>
 			</div>
 			
-		
+		</security:authorize>
 			<div class="row">
 				<br />
 
@@ -115,7 +116,7 @@
 	              	the correct behavior.
 	              --%>
 
-				<div><a href="editAccount?entityId=${account.entityId}" class="btn btn-link">Edit Account</a></div>
+				<div><security:authorize access="hasRole('EDITOR')"><a href="editAccount?entityId=${account.entityId}" class="btn btn-link">Edit Account</a></security:authorize></div>
 	
 				<div><a href="accountList">Return to Account List</a></div>
 
