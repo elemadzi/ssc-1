@@ -80,7 +80,7 @@ public class AccountController {
     //  c. Indicate a "201 Created" status
 	@PostMapping(value = "/accounts")
 	@ResponseStatus(HttpStatus.CREATED) 
-	public ResponseEntity<Void> createAccount(Account newAccount) {
+	public ResponseEntity<Void> createAccount(@RequestBody Account newAccount) {
 		// Saving the account also sets its entity Id
 		Account account = accountManager.save(newAccount);
 
