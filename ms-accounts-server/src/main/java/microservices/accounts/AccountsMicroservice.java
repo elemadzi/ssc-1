@@ -3,7 +3,9 @@ package microservices.accounts;
 import java.util.logging.Logger;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 
 import accounts.AccountManager;
@@ -15,6 +17,9 @@ import accounts.internal.JpaAccountManager;
  * <p>
  * Run this process SECOND.
  */
+
+@SpringBootApplication
+@EnableDiscoveryClient
 // TODO-06: Add annotations to make this a Spring Boot application and to ensure
 // registration with the Discovery Server
 // Ignore any httpMapperProperties deprecated warning
